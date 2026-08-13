@@ -7,6 +7,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     :root {
       /* Light mode (default) */
       --bg-primary: #f9fafb;
@@ -68,21 +72,21 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
         
-        <!-- Card 1 - Tai Chi -->
+        <!-- 1. Building Websites -->
         <article class="group">
           <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-[var(--bg-secondary)] mb-4 border border-[var(--card-border)]">
             <img src="IMG_3073.jpeg" 
-                 alt="Practicing Tai Chi" 
+                 alt="Building websites" 
                  class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
           </div>
-          <h3 class="text-xl font-semibold">Tai Chi Practice</h3>
-          <p class="text-[var(--text-secondary)] mt-1">Moving meditation and embodied awareness</p>
+          <h3 class="text-xl font-semibold">Building Websites</h3>
+          <p class="text-[var(--text-secondary)] mt-1">Designing and developing for the web</p>
         </article>
 
-        <!-- Card 2 - Music -->
+        <!-- 2. Writing Music -->
         <article class="group">
           <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-[var(--bg-secondary)] mb-4 border border-[var(--card-border)]">
-            <img src="IMG_3074.jpeg" 
+            <img src="IMG_3075.jpeg" 
                  alt="Writing music" 
                  class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
           </div>
@@ -90,26 +94,26 @@
           <p class="text-[var(--text-secondary)] mt-1">Composing and exploring sound</p>
         </article>
 
-        <!-- Card 3 - Art -->
-        <article class="group">
-          <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-[var(--bg-secondary)] mb-4 border border-[var(--card-border)]">
-            <img src="IMG_3075.jpeg" 
-                 alt="Making art" 
-                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
-          </div>
-          <h3 class="text-xl font-semibold">Making Art</h3>
-          <p class="text-[var(--text-secondary)] mt-1">Visual expression and creative exploration</p>
-        </article>
-
-        <!-- Card 4 - Web -->
+        <!-- 3. Tai Chi -->
         <article class="group">
           <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-[var(--bg-secondary)] mb-4 border border-[var(--card-border)]">
             <img src="IMG_3076.jpeg" 
-                 alt="Making web pages" 
+                 alt="Practicing Tai Chi" 
                  class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
           </div>
-          <h3 class="text-xl font-semibold">Building Websites</h3>
-          <p class="text-[var(--text-secondary)] mt-1">Designing and developing for the web</p>
+          <h3 class="text-xl font-semibold">Tai Chi Practice</h3>
+          <p class="text-[var(--text-secondary)] mt-1">Moving meditation and embodied awareness</p>
+        </article>
+
+        <!-- 4. Making Digital Art -->
+        <article class="group">
+          <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-[var(--bg-secondary)] mb-4 border border-[var(--card-border)]">
+            <img src="IMG_3074.jpeg" 
+                 alt="Making digital art" 
+                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+          </div>
+          <h3 class="text-xl font-semibold">Making Digital Art</h3>
+          <p class="text-[var(--text-secondary)] mt-1">Visual expression and creative exploration</p>
         </article>
 
       </div>
@@ -122,18 +126,43 @@
   </footer>
 
   <script>
-    const toggle = document.getElementById('theme-toggle');
-    const icon = document.getElementById('theme-icon');
-    const html = document.documentElement;
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const htmlElement = document.documentElement;
 
-    // Check saved preference or system preference
-    if (localStorage.theme === 'dark' || 
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      html.setAttribute('data-theme', 'dark');
-      icon.textContent = '☀️';
+    // Apply saved theme on load
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        htmlElement.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        htmlElement.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
     }
 
-    toggle.addEventListener('click', () => {
-      if (html.getAttribute('data-theme') === 'dark') {
-        html.removeAttribute('data-theme');
-        localStorage.theme = 'light';
+    // Check for saved theme or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+      applyTheme(savedTheme);
+    } else if (systemPrefersDark) {
+      applyTheme('dark');
+    }
+
+    // Toggle on click
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        applyTheme('light');
+      } else {
+        applyTheme('dark');
+      }
+    });
+  </script>
+
+</body>
+</html>
